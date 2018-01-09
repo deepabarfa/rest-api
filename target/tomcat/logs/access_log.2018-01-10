@@ -1,0 +1,12 @@
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:00:35:21 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 500 84 http-bio-9292-exec-2 830
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:00:41:58 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 409 89 http-bio-9292-exec-2 419
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:00:42:09 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 201 151976 http-bio-9292-exec-3 626
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:00:44:44 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 409 90 http-bio-9292-exec-2 355
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:00:44:57 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 500 84 http-bio-9292-exec-3 193
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:00:47:22 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 201 151976 http-bio-9292-exec-2 969
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:00:51:34 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 201 287 http-bio-9292-exec-2 691
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:00:54:00 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 201 158 http-bio-9292-exec-2 507
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:00:54:18 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 500 84 http-bio-9292-exec-3 23
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:00:55:57 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 500 84 http-bio-9292-exec-2 263
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:00:58:18 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 400 64 http-bio-9292-exec-2 312
+0:0:0:0:0:0:0:1 - - [10/Jan/2018:01:01:49 +0530] "POST /filesaver-api/v1/signup HTTP/1.1" 201 204 http-bio-9292-exec-2 508
