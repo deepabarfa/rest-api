@@ -17,15 +17,23 @@ public class ValidationUtils {
 
   private static EmailValidator emailValidator = EmailValidator.getInstance();
 
-  public static void validateUserResource(UserResource userResource) throws InvalidRequestException, InvalidParameterException {
+  public static void validateSignupRequest(UserResource userResource) throws InvalidRequestException, InvalidParameterException {
     ExceptionUtils.throwErrorIfRequestBodyIsNull(userResource);
     if (!isValidEmail(userResource.getEmailId())) {
-      ExceptionUtils.throwInvalidEmailException();
+      ExceptionUtils.throwInvalidEmailIdException();
     }
     if (StringUtils.isBlank(userResource.getName())) {
-      ExceptionUtils.throwInvalidNameException();
+      ExceptionUtils.throwInvalidUserNameException();
     }
     validatePassword(userResource.getPassword());
+  }
+
+  public static void validateLoginWithPasswordRequest(UserResource userResource) throws InvalidRequestException, InvalidParameterException {
+    ExceptionUtils.throwErrorIfRequestBodyIsNull(userResource);
+    if (!isValidEmail(userResource.getEmailId())) {
+      ExceptionUtils.throwInvalidEmailIdException();
+    }
+    ExceptionUtils.throwInvalidPasswordExceptionIfPasswordIsBlank(userResource.getPassword());
   }
 
   public static boolean isValidEmail(String email) {
@@ -33,9 +41,7 @@ public class ValidationUtils {
   }
 
   public static String validatePassword(String password) throws InvalidParameterException {
-    if (StringUtils.isBlank(password)) {
-      ExceptionUtils.throwInvalidPasswordException();
-    }
+    ExceptionUtils.throwInvalidPasswordExceptionIfPasswordIsBlank(password);
     /**
      * Minimum eight characters, maximum 20 characters, at least one uppercase
      * letter, one lowercase letter, one number and one special character.

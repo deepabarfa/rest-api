@@ -57,9 +57,12 @@
 
     <bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
     </bean>
+    
+    <bean id="serverProps" class="filesaver.api.models.v1.ServerProps" >
+        <constructor-arg index="0" value="${filesaver.api.env}" />
+    </bean>
  
     <!--    
-    custom beans configuration
     cache configuration
     queue configuration
     -->

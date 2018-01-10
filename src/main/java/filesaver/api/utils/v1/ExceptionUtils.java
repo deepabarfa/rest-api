@@ -2,7 +2,9 @@ package filesaver.api.utils.v1;
 
 import filesaver.api.exceptions.v1.InvalidParameterException;
 import filesaver.api.exceptions.v1.InvalidRequestException;
+import filesaver.api.exceptions.v1.UnAuthorizeException;
 import filesaver.api.resources.v1.BaseResource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,16 +31,26 @@ public class ExceptionUtils {
     }
   }
 
-  public static void throwInvalidEmailException() throws InvalidParameterException {
+  public static void throwInvalidEmailIdException() throws InvalidParameterException {
     throw new InvalidParameterException(messageUtils.t("error.user.invalidEmail"));
   }
   
-  public static void throwInvalidNameException() throws InvalidParameterException {
+  public static void throwInvalidUserNameException() throws InvalidParameterException {
     throw new InvalidParameterException(messageUtils.t("error.user.invalidName"));
   }
   
   public static void throwInvalidPasswordException() throws InvalidParameterException {
     throw new InvalidParameterException(messageUtils.t("error.user.invalidPassword"));
+  }
+  
+  public static void throwInvalidPasswordExceptionIfPasswordIsBlank(String password) throws InvalidParameterException {
+    if(StringUtils.isBlank(password)) {
+      throwInvalidPasswordException();
+    }
+  }
+  
+  public static UnAuthorizeException returnUnAuthorizeExceptionForInvalidLoginDetails() {
+    return new UnAuthorizeException(messageUtils.t("error.login.invalidDetails"));
   }
   
 }
