@@ -7,7 +7,6 @@ import filesaver.api.resources.v1.UserResource;
 import filesaver.api.utils.v1.ExceptionUtils;
 import filesaver.api.utils.v1.SecurityUtils;
 import java.util.Optional;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,7 +53,7 @@ public class UserService {
    * @return 
    * @throws filesaver.api.exceptions.v1.UnAuthorizeException 
    */
-  public User findUserByForLoginWithPassword(String emailId, String password) throws UnAuthorizeException {
+  public User findUserForLoginWithPassword(String emailId, String password) throws UnAuthorizeException {
     password = SecurityUtils.hashPassword(password);
     Optional<User> optionalUser = userRepository.findByEmailIdAndPassword(emailId, password);
     return optionalUser.orElseThrow(() -> ExceptionUtils.returnUnAuthorizeExceptionForInvalidLoginDetails());

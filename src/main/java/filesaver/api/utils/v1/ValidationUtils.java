@@ -5,6 +5,7 @@ import filesaver.api.exceptions.v1.InvalidRequestException;
 import filesaver.api.resources.v1.UserResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -13,6 +14,7 @@ import org.apache.commons.validator.routines.EmailValidator;
  * @since 15 Dec 2017
  *
  */
+@Component
 public class ValidationUtils {
 
   private static EmailValidator emailValidator = EmailValidator.getInstance();

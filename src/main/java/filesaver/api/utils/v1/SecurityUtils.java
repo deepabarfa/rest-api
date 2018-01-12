@@ -2,6 +2,7 @@ package filesaver.api.utils.v1;
 
 import java.util.Base64;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
  * @since 15 Dec 2017
  * 
  */
+@Component
 public class SecurityUtils {
   
   private static final String FS_ENCODED_PASSWD_SALT = System.getenv("FS_PASSWD_SALT") == null 

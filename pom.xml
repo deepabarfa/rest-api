@@ -12,6 +12,7 @@
     <name>Filesaver-Api</name>
     
     <profiles>
+        
         <profile>
             <id>local</id>
             <activation>
@@ -28,6 +29,7 @@
                 <jdbc.user>${filesaver.api.db.user}</jdbc.user>
             </properties>
         </profile>
+        
         <profile>
             <id>test</id>
             <properties>
@@ -41,6 +43,7 @@
                 <jdbc.user>${filesaver.api.db.user}</jdbc.user>
             </properties>
         </profile>
+        
     </profiles>
 
     <properties>
@@ -55,6 +58,7 @@
         <c3p0.version>0.9.5.2</c3p0.version>
         <postgresql.version>42.1.4.jre7</postgresql.version>
         <log4j2.version>2.8.2</log4j2.version>
+        <surefire.version>2.18</surefire.version>
         <tomcat.port>9292</tomcat.port>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -172,6 +176,12 @@
         </dependency>
         
         <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        
+        <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.9.9</version>
@@ -179,8 +189,8 @@
         
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.0</version>
             <scope>provided</scope>
         </dependency>
         
@@ -245,11 +255,61 @@
             <version>6.0.1.GA</version>
         </dependency>
         
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.2.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.natpryce</groupId>
+            <artifactId>make-it-easy</artifactId>
+            <version>4.0.1</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>2.0.2.RELEASE</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        
     </dependencies>
 
     <build>
+        
         <finalName>filesaver-api</finalName>
+        
         <plugins>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -259,16 +319,33 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.3</version>
             </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>2.6</version>
             </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <configuration>
+                    <environmentVariables>
+                        <FS_PASSWD_SALT>JDJhJDEwJER1REIxV2huSEVkRzVWSlIwLlRwUnU=</FS_PASSWD_SALT>
+                    </environmentVariables>
+                    <systemPropertyVariables>
+                        <spring.profiles.active>${env.id}</spring.profiles.active>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+                        
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
@@ -280,6 +357,7 @@
                     </systemProperties>
                 </configuration>
             </plugin>
+            
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
@@ -299,6 +377,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
@@ -317,7 +396,9 @@
                     </execution>
                 </executions>
             </plugin>
+            
         </plugins>
+        
     </build>
 
 </project>

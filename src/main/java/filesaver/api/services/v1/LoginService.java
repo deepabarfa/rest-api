@@ -31,7 +31,7 @@ public class LoginService {
 
   public UserResource loginWithPassword(UserResource userResource) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException {
     ValidationUtils.validateLoginWithPasswordRequest(userResource);
-    User user = userService.findUserByForLoginWithPassword(userResource.getEmailId(), userResource.getPassword());
+    User user = userService.findUserForLoginWithPassword(userResource.getEmailId(), userResource.getPassword());
     return new UserResource(user);
   }
   
