@@ -59,6 +59,7 @@
         <postgresql.version>42.1.4.jre7</postgresql.version>
         <log4j2.version>2.8.2</log4j2.version>
         <surefire.version>2.18</surefire.version>
+        <jacoco.version>0.7.1.201405082137</jacoco.version>
         <tomcat.port>9292</tomcat.port>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -344,6 +345,35 @@
                         <spring.profiles.active>${env.id}</spring.profiles.active>
                     </systemPropertyVariables>
                 </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>jacoco/jacoco.exec</destFile>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>jacoco</outputDirectory>
+                            <dataFile>jacoco/jacoco.exec</dataFile>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
                         
             <plugin>

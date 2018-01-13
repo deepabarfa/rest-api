@@ -4,3 +4,4 @@ target/
 .DS_Store
 persistence.local.properties
 nb-configuration.xml
+jacoco/
