@@ -9,6 +9,7 @@ import com.natpryce.makeiteasy.PropertyLookup;
 import filesaver.api.dao.models.v1.User;
 import filesaver.api.dao.models.v1.UserFileUploadSetting;
 import static filesaver.api.model.maker.UserFileUploadSettingMaker.FileUploadSetting;
+import filesaver.api.utils.v1.SecurityUtils;
 import org.joda.time.LocalDateTime;
 
 /**

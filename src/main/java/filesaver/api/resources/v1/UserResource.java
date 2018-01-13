@@ -1,6 +1,8 @@
 package filesaver.api.resources.v1;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import filesaver.api.dao.models.v1.User;
+import filesaver.api.utils.v1.JsonViews;
 
 /**
  *
@@ -19,10 +21,15 @@ public class UserResource extends BaseResource<User> {
     super(user);
   }
   
+  public UserResource(String emailId, String password) {
+    super(new User(emailId, password));
+  }
+  
   public void setEmailId(String emailId) {
     getModel().setEmailId(emailId);
   }
   
+  @JsonView(JsonViews.userWithoutPassword.class)
   public String getEmailId() {
     return getModel().getEmailId();
   }
@@ -31,6 +38,7 @@ public class UserResource extends BaseResource<User> {
     getModel().setName(name);
   }
   
+  @JsonView(JsonViews.userWithoutPassword.class)
   public String getName() {
     return getModel().getName();
   }
@@ -43,10 +51,12 @@ public class UserResource extends BaseResource<User> {
     return getModel().getPassword();
   }
   
+  @JsonView(JsonViews.userWithoutPassword.class)
   public Long getUploadLimit() {
     return getModel().getFileUploadSetting().getUploadLimit();
   }
   
+  @JsonView(JsonViews.userWithoutPassword.class)
   public Long getUploadedBytes() {
     return getModel().getFileUploadSetting().getUploadedBytes();
   }

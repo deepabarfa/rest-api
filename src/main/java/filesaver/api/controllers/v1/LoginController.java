@@ -1,5 +1,6 @@
 package filesaver.api.controllers.v1;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import static filesaver.api.enums.v1.ApiStatus.success;
 import filesaver.api.exceptions.v1.InvalidParameterException;
 import filesaver.api.exceptions.v1.InvalidRequestException;
@@ -7,6 +8,7 @@ import filesaver.api.exceptions.v1.UnAuthorizeException;
 import filesaver.api.models.v1.ApiResponse;
 import filesaver.api.resources.v1.UserResource;
 import filesaver.api.services.v1.LoginService;
+import filesaver.api.utils.v1.JsonViews;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,7 @@ public class LoginController {
     this.loginService = loginService;
   }
   
+  @JsonView(JsonViews.userWithoutPassword.class)
   @RequestMapping(method = POST, value = "/login-with-password")
   public ResponseEntity<ApiResponse> loginWithPassword(@RequestBody UserResource userResource) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException {
     UserResource createdUser = loginService.loginWithPassword(userResource);

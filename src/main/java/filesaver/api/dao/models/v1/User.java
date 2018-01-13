@@ -43,6 +43,12 @@ public class User extends BaseModel {
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false)
   private UserFileUploadSetting fileUploadSetting;
 
+  public User(String emailId, String password) {
+    this.emailId = emailId;
+    this.password = password;
+    this.fileUploadSetting = new UserFileUploadSetting(this);
+  }
+
   public void createFileUploadSetting() {
     this.fileUploadSetting = new UserFileUploadSetting(this);
   }
