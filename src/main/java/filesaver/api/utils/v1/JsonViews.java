@@ -14,5 +14,9 @@ public class JsonViews {
   
   public interface baseResponse {};
   
-  public interface userWithoutPassword extends baseResponse {};
+  public interface userAuthKey {};
+  public interface userEmailId {};
+  public interface userName {};
+    
+  public interface userDetailsExcludingPassword extends baseResponse {};  
 }

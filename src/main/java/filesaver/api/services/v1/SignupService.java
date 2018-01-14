@@ -8,6 +8,11 @@ import filesaver.api.resources.v1.UserResource;
 import filesaver.api.utils.v1.MessageUtils;
 import filesaver.api.utils.v1.SecurityUtils;
 import filesaver.api.utils.v1.ValidationUtils;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +37,7 @@ public class SignupService {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  public UserResource signup(UserResource userResource) throws InvalidRequestException, InvalidParameterException, AlreadyExistException {
+  public UserResource signup(UserResource userResource) throws InvalidRequestException, InvalidParameterException, AlreadyExistException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
     ValidationUtils.validateSignupRequest(userResource);
     boolean emailIdExists = userService.doesEmailIdExist(userResource.getEmailId());
     if (emailIdExists) {
@@ -41,6 +46,8 @@ public class SignupService {
     User user = userResource.getModel();
     user.setPassword(SecurityUtils.hashPassword(userResource.getPassword()));
     user.createFileUploadSetting();
+    user.createdHashKey();
+    user.generateAuthKey();
     userService.saveUser(user);
     return new UserResource(user);
   }

@@ -2,6 +2,7 @@ package filesaver.api.handlers.v1;
 
 import static filesaver.api.enums.v1.ApiStatus.error;
 import filesaver.api.exceptions.v1.AlreadyExistException;
+import filesaver.api.exceptions.v1.InvalidHeaderException;
 import filesaver.api.exceptions.v1.InvalidParameterException;
 import filesaver.api.exceptions.v1.InvalidRequestException;
 import filesaver.api.exceptions.v1.NotFoundException;
@@ -58,6 +59,11 @@ public class ApiExceptionHandler {
 
   @ExceptionHandler(InvalidParameterException.class)
   public ResponseEntity<ApiResponse> invalidParameter(InvalidParameterException e) {
+    return new ResponseEntity<>(new ApiResponse(e.getMessage(), error), HttpStatus.BAD_REQUEST);
+  }
+  
+  @ExceptionHandler(InvalidHeaderException.class)
+  public ResponseEntity<ApiResponse> invalidParameter(InvalidHeaderException e) {
     return new ResponseEntity<>(new ApiResponse(e.getMessage(), error), HttpStatus.BAD_REQUEST);
   }
 

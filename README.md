@@ -8,7 +8,7 @@ Filesaver will serve as a cloud storage platform for users to backup their data.
 
 The project is written in Java 8.
 
-Maven is used for Project Management. The `pom.xml` file will contain all the dependencies needed for the project 
+Maven is used for Project Management. The `pom.xml` file will contain all the dependencies needed for the project
 as well as other configuration details.
 
 ### Prerequisites
@@ -20,7 +20,8 @@ as well as other configuration details.
 
 ### Environment variables
 
-* FS_PASSWD_SALT
+* FSENC_PASSWD_SALT
+* NCRYPT_16
 
 ## Build tasks
 

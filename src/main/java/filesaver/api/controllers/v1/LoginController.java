@@ -9,6 +9,12 @@ import filesaver.api.models.v1.ApiResponse;
 import filesaver.api.resources.v1.UserResource;
 import filesaver.api.services.v1.LoginService;
 import filesaver.api.utils.v1.JsonViews;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +41,9 @@ public class LoginController {
     this.loginService = loginService;
   }
   
-  @JsonView(JsonViews.userWithoutPassword.class)
+  @JsonView(JsonViews.userDetailsExcludingPassword.class)
   @RequestMapping(method = POST, value = "/login-with-password")
-  public ResponseEntity<ApiResponse> loginWithPassword(@RequestBody UserResource userResource) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException {
+  public ResponseEntity<ApiResponse> loginWithPassword(@RequestBody UserResource userResource, HttpServletRequest request) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
     UserResource createdUser = loginService.loginWithPassword(userResource);
     return new ResponseEntity<>(new ApiResponse(createdUser, success), HttpStatus.OK);
   }

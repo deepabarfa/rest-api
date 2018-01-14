@@ -6,7 +6,12 @@ import filesaver.api.repositories.v1.UserRepository;
 import filesaver.api.resources.v1.UserResource;
 import filesaver.api.utils.v1.ExceptionUtils;
 import filesaver.api.utils.v1.SecurityUtils;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +62,12 @@ public class UserService {
     password = SecurityUtils.hashPassword(password);
     Optional<User> optionalUser = userRepository.findByEmailIdAndPassword(emailId, password);
     return optionalUser.orElseThrow(() -> ExceptionUtils.returnUnAuthorizeExceptionForInvalidLoginDetails());
+  }
+  
+  public User findUserByAuthKey(String authKey) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, UnAuthorizeException {
+    String emailId = SecurityUtils.decryptAuthKeyAndReturnEmailId(authKey);
+    Optional<User> optionalUser = userRepository.findByEmailId(emailId);
+    return optionalUser.orElseThrow(() -> ExceptionUtils.returnUnAuthorizeExceptionForInvalidAuthKey());
   }
   
 }

@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -62,5 +63,11 @@ public class Folder extends BaseModel implements Serializable {
   @OneToMany(mappedBy = "parentFolder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @Fetch(FetchMode.SUBSELECT)
   private List<Folder> subFolders = new ArrayList<>(0);
+  
+  public void initFolder(User user) {
+    this.user  = user;
+    this.size = 0l;
+    this.uniqueId = RandomStringUtils.randomAlphanumeric(20);
+  }
 
 }

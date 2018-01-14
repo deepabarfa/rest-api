@@ -25,6 +25,7 @@ public class UserMaker {
   public static final Property<User, String> name = new Property<>();
   public static final Property<User, String> emailId = new Property<>();
   public static final Property<User, String> password = new Property<>();
+  public static final Property<User, String> hashKey = new Property<>();
   public static final Property<User, UserFileUploadSetting> fileUploadSetting = new Property<>();
   public static final Property<User, LocalDateTime> updatedAt = new Property<>();
   public static final Property<User, LocalDateTime> createdAt = new Property<>();
@@ -35,6 +36,7 @@ public class UserMaker {
     user.setName(lookup.valueOf(name, "Foo"));
     user.setEmailId(lookup.valueOf(emailId, "foo@bar.com"));
     user.setPassword(lookup.valueOf(password, "AbcAx@$4rV"));
+    user.setHashKey(lookup.valueOf(password, "AbcAx@$4rV"));
     user.setFileUploadSetting(lookup.valueOf(fileUploadSetting, make(a(FileUploadSetting, with(UserFileUploadSettingMaker.user, user)))));
     user.setUpdatedAt(lookup.valueOf(updatedAt, new LocalDateTime()));
     user.setCreatedAt(lookup.valueOf(createdAt, new LocalDateTime()));

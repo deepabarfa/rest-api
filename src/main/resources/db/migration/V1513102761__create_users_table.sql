@@ -4,6 +4,7 @@ create table users (
     name varchar(50) not null,
     email_id varchar(255) not null unique,
     password varchar(255) not null,
+    hash_key varchar(10) not null,
     created_at timestamp(6) default current_timestamp,
     updated_at timestamp(6) default current_timestamp
 

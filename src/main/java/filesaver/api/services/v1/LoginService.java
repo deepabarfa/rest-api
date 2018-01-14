@@ -7,6 +7,11 @@ import filesaver.api.exceptions.v1.UnAuthorizeException;
 import filesaver.api.resources.v1.UserResource;
 import filesaver.api.utils.v1.MessageUtils;
 import filesaver.api.utils.v1.ValidationUtils;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +34,10 @@ public class LoginService {
     this.messageUtils = messageUtils;
   }
 
-  public UserResource loginWithPassword(UserResource userResource) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException {
+  public UserResource loginWithPassword(UserResource userResource) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
     ValidationUtils.validateLoginWithPasswordRequest(userResource);
     User user = userService.findUserForLoginWithPassword(userResource.getEmailId(), userResource.getPassword());
+    user.generateAuthKey();
     return new UserResource(user);
   }
   

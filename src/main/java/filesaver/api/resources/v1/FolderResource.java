@@ -18,4 +18,20 @@ public class FolderResource extends BaseResource<Folder> {
   public FolderResource(Folder folder) {
     super(folder);
   }
+  
+  public void setName(String name) {
+    getModel().setName(name);
+  }
+  
+  public String getName() {
+    return getModel().getName();
+  }
+  
+  public String getUniqueId() {
+    return getModel().getUniqueId();
+  }
+  
+  public Long getSize() {
+    return getModel().getSize();
+  }
 }

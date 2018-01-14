@@ -7,7 +7,22 @@
                 http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/mvc 
                 http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
     <mvc:interceptors>
-        <bean id="authKeyInterceptor" class="filesaver.api.interceptors.v1.AuthKeyInterceptor"/>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/v1/"/>
+            <mvc:exclude-mapping path="/v1/signup"/>
+            <mvc:exclude-mapping path="/v1/login-with-password"/>
+            <bean id="authKeyInterceptor" class="filesaver.api.interceptors.v1.AuthKeyInterceptor"/>
+        </mvc:interceptor>
+        
+        <mvc:interceptor>
+            <mvc:mapping path="/v1/"/>
+            <mvc:mapping path="/v1/signup"/>
+            <mvc:mapping path="/v1/login-with-password"/>
+            <bean id="nonAuthKeyInterceptor" class="filesaver.api.interceptors.v1.NonAuthKeyInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
+    
 </beans>

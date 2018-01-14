@@ -31,26 +31,34 @@ public class ExceptionUtils {
     }
   }
 
-  public static void throwInvalidEmailIdException() throws InvalidParameterException {
+  public static void throwExceptionForInvalidEmailId() throws InvalidParameterException {
     throw new InvalidParameterException(messageUtils.t("error.user.invalidEmail"));
   }
   
-  public static void throwInvalidUserNameException() throws InvalidParameterException {
+  public static void throwExceptionForInvalidUserName() throws InvalidParameterException {
     throw new InvalidParameterException(messageUtils.t("error.user.invalidName"));
   }
+
+  public static void throwExceptionForInvalidFolderName() throws InvalidParameterException {
+    throw new InvalidParameterException(messageUtils.t("error.folder.invalidName"));
+  }
   
-  public static void throwInvalidPasswordException() throws InvalidParameterException {
+  public static void throwExceptionForInvalidPassword() throws InvalidParameterException {
     throw new InvalidParameterException(messageUtils.t("error.user.invalidPassword"));
   }
   
-  public static void throwInvalidPasswordExceptionIfPasswordIsBlank(String password) throws InvalidParameterException {
+  public static void throwExceptionIfPasswordIsBlank(String password) throws InvalidParameterException {
     if(StringUtils.isBlank(password)) {
-      throwInvalidPasswordException();
+      throwExceptionForInvalidPassword();
     }
   }
   
   public static UnAuthorizeException returnUnAuthorizeExceptionForInvalidLoginDetails() {
     return new UnAuthorizeException(messageUtils.t("error.login.invalidDetails"));
+  }
+  
+  public static UnAuthorizeException returnUnAuthorizeExceptionForInvalidAuthKey() {
+    return new UnAuthorizeException(messageUtils.t("error.auth.invalidKey"));
   }
   
 }

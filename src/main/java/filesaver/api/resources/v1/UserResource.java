@@ -29,7 +29,7 @@ public class UserResource extends BaseResource<User> {
     getModel().setEmailId(emailId);
   }
   
-  @JsonView(JsonViews.userWithoutPassword.class)
+  @JsonView(JsonViews.userDetailsExcludingPassword.class)
   public String getEmailId() {
     return getModel().getEmailId();
   }
@@ -38,7 +38,7 @@ public class UserResource extends BaseResource<User> {
     getModel().setName(name);
   }
   
-  @JsonView(JsonViews.userWithoutPassword.class)
+  @JsonView(JsonViews.userDetailsExcludingPassword.class)
   public String getName() {
     return getModel().getName();
   }
@@ -51,14 +51,19 @@ public class UserResource extends BaseResource<User> {
     return getModel().getPassword();
   }
   
-  @JsonView(JsonViews.userWithoutPassword.class)
+  @JsonView(JsonViews.userDetailsExcludingPassword.class)
   public Long getUploadLimit() {
     return getModel().getFileUploadSetting().getUploadLimit();
   }
   
-  @JsonView(JsonViews.userWithoutPassword.class)
+  @JsonView(JsonViews.userDetailsExcludingPassword.class)
   public Long getUploadedBytes() {
     return getModel().getFileUploadSetting().getUploadedBytes();
+  }
+  
+  @JsonView(JsonViews.userDetailsExcludingPassword.class)
+  public String getAuthKey() {
+    return getModel().getAuthKey();
   }
   
 }
