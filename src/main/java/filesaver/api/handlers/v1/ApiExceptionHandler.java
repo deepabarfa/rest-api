@@ -63,7 +63,7 @@ public class ApiExceptionHandler {
   }
   
   @ExceptionHandler(InvalidHeaderException.class)
-  public ResponseEntity<ApiResponse> invalidParameter(InvalidHeaderException e) {
+  public ResponseEntity<ApiResponse> invalidHeader(InvalidHeaderException e) {
     return new ResponseEntity<>(new ApiResponse(e.getMessage(), error), HttpStatus.BAD_REQUEST);
   }
 

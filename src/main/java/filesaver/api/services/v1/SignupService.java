@@ -46,7 +46,7 @@ public class SignupService {
     User user = userResource.getModel();
     user.setPassword(SecurityUtils.hashPassword(userResource.getPassword()));
     user.createFileUploadSetting();
-    user.createdHashKey();
+    user.createHashKey();
     user.generateAuthKey();
     userService.saveUser(user);
     return new UserResource(user);

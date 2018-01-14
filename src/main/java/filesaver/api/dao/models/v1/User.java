@@ -65,7 +65,7 @@ public class User extends BaseModel {
     this.fileUploadSetting = new UserFileUploadSetting(this);
   }
   
-  public void createdHashKey() {
+  public void createHashKey() {
     this.hashKey = RandomStringUtils.randomAlphanumeric(10);
   }
   
