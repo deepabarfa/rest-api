@@ -14,9 +14,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/v1/users")
 public class UserController {
   
-  //forgot password api
-  //reset password api
-  //update user api
-  //get user api - manager session through jwt
-  
 }

@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -46,21 +47,21 @@ public class Folder extends BaseModel implements Serializable {
   private String name;
 
   @JoinColumn(name = "parent_folder_id")
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   private Folder parentFolder;
 
   @JoinColumn(name = "user_id")
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   private User user;
 
   @NotNull
   @Column(name = "folder_size")
   private Long size;
 
-  @OneToMany(mappedBy = "folder", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "folder", fetch = FetchType.EAGER)
   private Set<File> files = new HashSet<>(0);
 
-  @OneToMany(mappedBy = "parentFolder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "parentFolder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @Fetch(FetchMode.SUBSELECT)
   private Set<Folder> subFolders = new HashSet<>(0);
 
@@ -68,6 +69,11 @@ public class Folder extends BaseModel implements Serializable {
     this.user = user;
     this.size = 0l;
     this.uniqueId = RandomStringUtils.randomAlphanumeric(20);
+  }
+  
+  @PrePersist
+  private void setUniqueId() {
+    this.uniqueId = uniqueId.toLowerCase();
   }
 
 }

@@ -2,6 +2,7 @@ package filesaver.api.utils.v1;
 
 import filesaver.api.exceptions.v1.InvalidParameterException;
 import filesaver.api.exceptions.v1.InvalidRequestException;
+import filesaver.api.exceptions.v1.NotFoundException;
 import filesaver.api.exceptions.v1.UnAuthorizeException;
 import filesaver.api.resources.v1.BaseResource;
 import org.apache.commons.lang3.StringUtils;
@@ -59,6 +60,10 @@ public class ExceptionUtils {
   
   public static UnAuthorizeException returnUnAuthorizeExceptionForInvalidAuthKey() {
     return new UnAuthorizeException(messageUtils.t("error.auth.invalidKey"));
+  }
+  
+  public static NotFoundException returnNotFoundExceptionForFolder() {
+    return new NotFoundException(messageUtils.t("error.folder.notFound"));
   }
   
 }

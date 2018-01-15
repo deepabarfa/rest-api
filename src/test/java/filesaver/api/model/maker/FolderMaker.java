@@ -36,7 +36,7 @@ public class FolderMaker {
     Folder folder = new Folder();
     folder.setId(lookup.valueOf(id, (Long) null));
     folder.setName(lookup.valueOf(name, "Songs"));
-    folder.setUniqueId(lookup.valueOf(uniqueId, RandomStringUtils.randomAlphanumeric(20)));
+    folder.setUniqueId(lookup.valueOf(uniqueId, RandomStringUtils.randomAlphanumeric(20).toLowerCase()));
     folder.setParentFolder(lookup.valueOf(parentFolder, (Folder) null));
     folder.setUser(lookup.valueOf(user, (User) null));
     folder.setSize(lookup.valueOf(size, 0l));
