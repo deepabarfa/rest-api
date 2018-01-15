@@ -9,7 +9,6 @@ import com.natpryce.makeiteasy.PropertyLookup;
 import filesaver.api.dao.models.v1.User;
 import filesaver.api.dao.models.v1.UserFileUploadSetting;
 import static filesaver.api.model.maker.UserFileUploadSettingMaker.FileUploadSetting;
-import filesaver.api.utils.v1.SecurityUtils;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -36,7 +35,7 @@ public class UserMaker {
     user.setName(lookup.valueOf(name, "Foo"));
     user.setEmailId(lookup.valueOf(emailId, "foo@bar.com"));
     user.setPassword(lookup.valueOf(password, "AbcAx@$4rV"));
-    user.setHashKey(lookup.valueOf(password, "AbcAx@$4rV"));
+    user.setHashKey(lookup.valueOf(hashKey, "AbcAx@$4rV"));
     user.setFileUploadSetting(lookup.valueOf(fileUploadSetting, make(a(FileUploadSetting, with(UserFileUploadSettingMaker.user, user)))));
     user.setUpdatedAt(lookup.valueOf(updatedAt, new LocalDateTime()));
     user.setCreatedAt(lookup.valueOf(createdAt, new LocalDateTime()));

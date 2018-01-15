@@ -40,12 +40,16 @@ public class File extends BaseModel implements Serializable {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "folder_id")
   private Folder folder;
-  
+
   @JoinColumn(name = "user_id")
   @ManyToOne(cascade = CascadeType.ALL)
   private User user;
-  
+
   @NotNull
   @Column(name = "file_size")
   private Long size;
+
+  @NotNull
+  @Column(name = "file_type")
+  private String type;
 }

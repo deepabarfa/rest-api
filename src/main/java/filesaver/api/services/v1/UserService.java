@@ -34,15 +34,6 @@ public class UserService {
   }
   
   @Transactional(rollbackFor = {Throwable.class})
-  public UserResource updateUser(UserResource userResource) {
-    return new UserResource();
-  }
-  
-  public User getUser() {
-    return new User();
-  }
-  
-  @Transactional(rollbackFor = {Throwable.class})
   public User saveUser(User user) {
     return userRepository.save(user);
   }

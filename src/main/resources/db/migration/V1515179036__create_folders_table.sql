@@ -12,4 +12,5 @@ create table folders (
 );
 
 create index folders_index_user_id on folders(user_id);
+create index folders_index_unique_id on folders(unique_id);
 create index folders_index_parent_folder_id on folders(parent_folder_id);

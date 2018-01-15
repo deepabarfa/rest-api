@@ -1,6 +1,8 @@
 package filesaver.api.resources.v1;
 
 import filesaver.api.dao.models.v1.Folder;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -33,5 +35,27 @@ public class FolderResource extends BaseResource<Folder> {
   
   public Long getSize() {
     return getModel().getSize();
+  }
+  
+  public String getCreatedAt() {
+    return getModel().getCreatedAt().toString("dd-MM-yyyy HH:mm:ss");
+  }
+  
+  public String getUpdatedAt() {
+    return getModel().getUpdatedAt().toString("dd-MM-yyyy HH:mm:ss");
+  }
+  
+  public Set<SubFolderResource> getSubFolders() {
+    return getModel().getSubFolders()
+      .stream()
+      .map(sf -> new SubFolderResource(sf))
+      .collect(Collectors.toSet());
+  }
+  
+  public Set<FileResource> getFiles() {
+    return getModel().getFiles()
+      .stream()
+      .map(f -> new FileResource(f))
+      .collect(Collectors.toSet());
   }
 }
