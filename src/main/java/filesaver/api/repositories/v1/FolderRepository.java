@@ -3,8 +3,9 @@ package filesaver.api.repositories.v1;
 import filesaver.api.dao.models.v1.Folder;
 import filesaver.api.dao.models.v1.User;
 import java.util.Optional;
-import java.util.Set;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,10 +16,10 @@ import org.springframework.stereotype.Repository;
  * 
  */
 @Repository
-public interface FolderRepository extends CrudRepository<Folder, Long> {
+public interface FolderRepository extends PagingAndSortingRepository<Folder, Long> {
 
   public Optional<Folder> findByUniqueIdAndUser(String uniqueId, User user);
 
-  public Set<Folder> findByUserAndParentFolderIsNull(User user);
+  public Page<Folder> findByUserAndParentFolderIsNull(User user, Pageable pageable);
 
 }

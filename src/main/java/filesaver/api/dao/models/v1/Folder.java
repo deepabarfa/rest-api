@@ -58,10 +58,10 @@ public class Folder extends BaseModel implements Serializable {
   @Column(name = "folder_size")
   private Long size;
 
-  @OneToMany(mappedBy = "folder", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "folder", fetch = FetchType.LAZY)
   private Set<File> files = new HashSet<>(0);
 
-  @OneToMany(mappedBy = "parentFolder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "parentFolder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @Fetch(FetchMode.SUBSELECT)
   private Set<Folder> subFolders = new HashSet<>(0);
 

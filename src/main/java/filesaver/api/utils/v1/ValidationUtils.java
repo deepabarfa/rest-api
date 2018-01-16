@@ -2,7 +2,7 @@ package filesaver.api.utils.v1;
 
 import filesaver.api.exceptions.v1.InvalidParameterException;
 import filesaver.api.exceptions.v1.InvalidRequestException;
-import filesaver.api.resources.v1.FolderResource;
+import filesaver.api.resources.v1.MinimalFolderResource;
 import filesaver.api.resources.v1.UserResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -31,7 +31,7 @@ public class ValidationUtils {
     validatePassword(userResource.getPassword());
   }
   
-  public static void validateCreateFolderRequest(FolderResource folderResource) throws InvalidRequestException, InvalidParameterException {
+  public static void validateCreateFolderRequest(MinimalFolderResource folderResource) throws InvalidRequestException, InvalidParameterException {
     ExceptionUtils.throwErrorIfRequestBodyIsNull(folderResource);
     if (StringUtils.isBlank(folderResource.getName())) {
       ExceptionUtils.throwExceptionForInvalidFolderName();

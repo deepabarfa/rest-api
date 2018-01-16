@@ -211,9 +211,9 @@ public class FolderControllerIntTest {
       .requestAttr("principal", user))
       .andExpect(MockMvcResultMatchers.status().isOk())
       .andExpect(jsonPath("$.status").value("success"))
-      .andExpect(jsonPath("$.body").isArray())
-      .andExpect(jsonPath("$.body[*]").value(Matchers.hasSize(2)))
-      .andExpect(jsonPath("$.body[*].uniqueId").value(containsInAnyOrder(parentFolder1.getUniqueId(), parentFolder2.getUniqueId())))
+      .andExpect(jsonPath("$.body.results").isArray())
+      .andExpect(jsonPath("$.body.results[*]").value(Matchers.hasSize(2)))
+      .andExpect(jsonPath("$.body.results[*].uniqueId").value(containsInAnyOrder(parentFolder1.getUniqueId(), parentFolder2.getUniqueId())))
       .andReturn();
   }
 
