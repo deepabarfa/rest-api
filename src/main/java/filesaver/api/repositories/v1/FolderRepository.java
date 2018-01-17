@@ -22,4 +22,6 @@ public interface FolderRepository extends PagingAndSortingRepository<Folder, Lon
 
   public Page<Folder> findByUserAndParentFolderIsNull(User user, Pageable pageable);
 
+  public Page<Folder> findByUserAndParentFolder(User user, Folder parentFolder, Pageable pageable);
+
 }

@@ -2,7 +2,7 @@ package filesaver.api.utils.v1;
 
 import filesaver.api.exceptions.v1.InvalidParameterException;
 import filesaver.api.exceptions.v1.InvalidRequestException;
-import filesaver.api.resources.v1.MinimalFolderResource;
+import filesaver.api.resources.v1.FolderResource;
 import filesaver.api.resources.v1.UserResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -21,29 +21,29 @@ public class ValidationUtils {
   private static EmailValidator emailValidator = EmailValidator.getInstance();
 
   public static void validateSignupRequest(UserResource userResource) throws InvalidRequestException, InvalidParameterException {
-    ExceptionUtils.throwErrorIfRequestBodyIsNull(userResource);
+    ExceptionUtils.throwInvalidRequestExceptionIfResourceIsNull(userResource);
     if (!isValidEmail(userResource.getEmailId())) {
-      ExceptionUtils.throwExceptionForInvalidEmailId();
+      ExceptionUtils.throwInvalidParameterExceptionForInvalidEmailId();
     }
     if (StringUtils.isBlank(userResource.getName())) {
-      ExceptionUtils.throwExceptionForInvalidUserName();
+      ExceptionUtils.throwInvalidParameterExceptionForInvalidUserName();
     }
     validatePassword(userResource.getPassword());
   }
   
-  public static void validateCreateFolderRequest(MinimalFolderResource folderResource) throws InvalidRequestException, InvalidParameterException {
-    ExceptionUtils.throwErrorIfRequestBodyIsNull(folderResource);
+  public static void validateCreateFolderRequest(FolderResource folderResource) throws InvalidRequestException, InvalidParameterException {
+    ExceptionUtils.throwInvalidRequestExceptionIfResourceIsNull(folderResource);
     if (StringUtils.isBlank(folderResource.getName())) {
-      ExceptionUtils.throwExceptionForInvalidFolderName();
+      ExceptionUtils.throwInvalidParameterExceptionForInvalidFolderName();
     }
   }
 
   public static void validateLoginWithPasswordRequest(UserResource userResource) throws InvalidRequestException, InvalidParameterException {
-    ExceptionUtils.throwErrorIfRequestBodyIsNull(userResource);
+    ExceptionUtils.throwInvalidRequestExceptionIfResourceIsNull(userResource);
     if (!isValidEmail(userResource.getEmailId())) {
-      ExceptionUtils.throwExceptionForInvalidEmailId();
+      ExceptionUtils.throwInvalidParameterExceptionForInvalidEmailId();
     }
-    ExceptionUtils.throwExceptionIfPasswordIsBlank(userResource.getPassword());
+    ExceptionUtils.throwInvalidParameterExceptionIfPasswordIsBlank(userResource.getPassword());
   }
 
   public static boolean isValidEmail(String email) {
@@ -51,7 +51,7 @@ public class ValidationUtils {
   }
 
   public static String validatePassword(String password) throws InvalidParameterException {
-    ExceptionUtils.throwExceptionIfPasswordIsBlank(password);
+    ExceptionUtils.throwInvalidParameterExceptionIfPasswordIsBlank(password);
     /**
      * Minimum eight characters, maximum 20 characters, at least one uppercase
      * letter, one lowercase letter, one number and one special character.
@@ -59,7 +59,7 @@ public class ValidationUtils {
     String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&_])[A-Za-z\\d$@$!%*?&_]{8,20}";
 
     if (!password.matches(regex)) {
-      ExceptionUtils.throwExceptionForInvalidPassword();
+      ExceptionUtils.throwInvalidParameterExceptionForInvalidPassword();
     }
     return password;
   }

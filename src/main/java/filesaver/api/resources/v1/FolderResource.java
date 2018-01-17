@@ -9,13 +9,13 @@ import filesaver.api.dao.models.v1.Folder;
  * @since 16 Jan 2017
  *
  */
-public class MinimalFolderResource extends BaseResource<Folder> {
+public class FolderResource extends BaseResource<Folder> {
 
-  public MinimalFolderResource() {
+  public FolderResource() {
     super(new Folder());
   }
 
-  public MinimalFolderResource(Folder folder) {
+  public FolderResource(Folder folder) {
     super(folder);
   }
 

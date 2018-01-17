@@ -8,7 +8,7 @@ import filesaver.api.exceptions.v1.NotFoundException;
 import filesaver.api.models.v1.FilesaverPage;
 import org.springframework.data.domain.Page;
 import filesaver.api.repositories.v1.FolderRepository;
-import filesaver.api.resources.v1.MinimalFolderResource;
+import filesaver.api.resources.v1.FolderResource;
 import filesaver.api.utils.v1.ExceptionUtils;
 import filesaver.api.utils.v1.ValidationUtils;
 import java.util.List;
@@ -39,12 +39,12 @@ public class FolderService {
   }
   
   @Transactional(rollbackFor = {Throwable.class})
-  public MinimalFolderResource createFolder(MinimalFolderResource folderResource, User user) throws InvalidRequestException, InvalidParameterException {
+  public FolderResource createFolder(FolderResource folderResource, User user) throws InvalidRequestException, InvalidParameterException {
     ValidationUtils.validateCreateFolderRequest(folderResource);
     Folder folder = folderResource.getModel();
     folder.initFolder(user);
     folder = saveFolder(folder);
-    return new MinimalFolderResource(folder);
+    return new FolderResource(folder);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -58,30 +58,43 @@ public class FolderService {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  public MinimalFolderResource createSubFolder(String parentUniqueId, MinimalFolderResource folderResource, User user) throws NotFoundException, InvalidRequestException, InvalidParameterException {
+  public FolderResource createSubFolder(String parentUniqueId, FolderResource folderResource, User user) throws NotFoundException, InvalidRequestException, InvalidParameterException {
     Folder parentFolder = getFolderByUniqueIdAndUser(parentUniqueId, user);
     ValidationUtils.validateCreateFolderRequest(folderResource);
     Folder folder = folderResource.getModel();
     folder.setParentFolder(parentFolder);
     folder.initFolder(user);
     folder = saveFolder(folder);
-    return new MinimalFolderResource(folder);
+    return new FolderResource(folder);
   }
 
-  public MinimalFolderResource getFolder(String uniqueId, User user) throws NotFoundException {
+  public FolderResource getFolder(String uniqueId, User user) throws NotFoundException {
     Folder folder = getFolderByUniqueIdAndUser(uniqueId, user);
-    return new MinimalFolderResource(folder);
+    return new FolderResource(folder);
   }
   
-  public FilesaverPage<MinimalFolderResource> getPaginatedTopFoldersForUser(User user, int page, int count) {
+  public FilesaverPage<FolderResource> getPaginatedTopFoldersForUser(User user, int page, int count) {
     Pageable pageable = PageRequest.of(page - 1, count, new Sort(Sort.Direction.DESC, "updatedAt"));
     Page<Folder> topFoldersPage = folderRepository.findByUserAndParentFolderIsNull(user, pageable);
-    List<MinimalFolderResource> folderResources = topFoldersPage.getContent()
+    List<FolderResource> folderResources = topFoldersPage.getContent()
       .stream()
-      .map(tf -> new MinimalFolderResource(tf))
+      .map(tf -> new FolderResource(tf))
       .collect(Collectors.toList());
     FilesaverPage filesaverPage = new FilesaverPage(
       page, count, topFoldersPage.getTotalPages(), topFoldersPage.getTotalElements(), folderResources);
+    return filesaverPage;
+  }
+
+  public FilesaverPage<FolderResource> getPaginatedSubFolders(String uniqueId, User user, int page, int count) throws NotFoundException {
+    Pageable pageable = PageRequest.of(page - 1, count, new Sort(Sort.Direction.DESC, "updatedAt"));
+    Folder parentFolder = getFolderByUniqueIdAndUser(uniqueId, user);
+    Page<Folder> subFoldersPage = folderRepository.findByUserAndParentFolder(user, parentFolder, pageable);
+    List<FolderResource> folderResources = subFoldersPage.getContent()
+      .stream()
+      .map(tf -> new FolderResource(tf))
+      .collect(Collectors.toList());
+    FilesaverPage filesaverPage = new FilesaverPage(
+      page, count, subFoldersPage.getTotalPages(), subFoldersPage.getTotalElements(), folderResources);
     return filesaverPage;
   }
 

@@ -8,7 +8,7 @@ import filesaver.api.exceptions.v1.NotFoundException;
 import filesaver.api.exceptions.v1.UnAuthorizeException;
 import filesaver.api.models.v1.ApiResponse;
 import filesaver.api.models.v1.FilesaverPage;
-import filesaver.api.resources.v1.MinimalFolderResource;
+import filesaver.api.resources.v1.FolderResource;
 import filesaver.api.services.v1.FolderService;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,24 +41,24 @@ public class FolderController {
   }
   
   @RequestMapping(method = POST)
-  public ResponseEntity<ApiResponse> createFolder(@RequestBody MinimalFolderResource folderResource, HttpServletRequest request) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException {
+  public ResponseEntity<ApiResponse> createFolder(@RequestBody FolderResource folderResource, HttpServletRequest request) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException {
     User user = (User) request.getAttribute("principal");
-    MinimalFolderResource createdFolder = folderService.createFolder(folderResource, user);
+    FolderResource createdFolder = folderService.createFolder(folderResource, user);
     return new ResponseEntity<>(new ApiResponse(createdFolder, success), HttpStatus.CREATED);
   }
   
   @RequestMapping(method = POST, value = "/{uniqueId}")
-  public ResponseEntity<ApiResponse> createSubFolder(@PathVariable(value = "uniqueId") String uniqueId, @RequestBody MinimalFolderResource folderResource, 
+  public ResponseEntity<ApiResponse> createSubFolder(@PathVariable(value = "uniqueId") String uniqueId, @RequestBody FolderResource folderResource, 
     HttpServletRequest request) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException, NotFoundException {
     User user = (User) request.getAttribute("principal");
-    MinimalFolderResource createdFolder = folderService.createSubFolder(uniqueId, folderResource, user);
+    FolderResource createdFolder = folderService.createSubFolder(uniqueId, folderResource, user);
     return new ResponseEntity<>(new ApiResponse(createdFolder, success), HttpStatus.CREATED);
   }
   
   @RequestMapping(method = GET, value = "/{uniqueId}")
   public ResponseEntity<ApiResponse> getFolder(@PathVariable(value = "uniqueId") String uniqueId, HttpServletRequest request) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException, NotFoundException {
     User user = (User) request.getAttribute("principal");
-    MinimalFolderResource createdFolder = folderService.getFolder(uniqueId, user);
+    FolderResource createdFolder = folderService.getFolder(uniqueId, user);
     return new ResponseEntity<>(new ApiResponse(createdFolder, success), HttpStatus.OK);
   }
   
@@ -67,8 +67,17 @@ public class FolderController {
     @RequestParam(name = "page", defaultValue = "1", required = false) int page, 
     @RequestParam(name = "count", defaultValue = "5", required = false) int count, HttpServletRequest request) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException {
     User user = (User) request.getAttribute("principal");
-    FilesaverPage<MinimalFolderResource> paginatedTopFolders = folderService.getPaginatedTopFoldersForUser(user, page, count);
+    FilesaverPage<FolderResource> paginatedTopFolders = folderService.getPaginatedTopFoldersForUser(user, page, count);
     return new ResponseEntity<>(new ApiResponse(paginatedTopFolders, success), HttpStatus.OK);
+  }
+  
+  @RequestMapping(method = GET, value = "/{uniqueId}/subfolders")
+  public ResponseEntity<ApiResponse> getSubFolders(@PathVariable(value = "uniqueId") String uniqueId,
+    @RequestParam(name = "page", defaultValue = "1", required = false) int page, 
+    @RequestParam(name = "count", defaultValue = "5", required = false) int count, HttpServletRequest request) throws NotFoundException {
+    User user = (User) request.getAttribute("principal");
+    FilesaverPage<FolderResource> paginatedSubFolders = folderService.getPaginatedSubFolders(uniqueId, user, page, count);
+    return new ResponseEntity<>(new ApiResponse(paginatedSubFolders, success), HttpStatus.OK);
   }
   
 }

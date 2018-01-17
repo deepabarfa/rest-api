@@ -216,5 +216,41 @@ public class FolderControllerIntTest {
       .andExpect(jsonPath("$.body.results[*].uniqueId").value(containsInAnyOrder(parentFolder1.getUniqueId(), parentFolder2.getUniqueId())))
       .andReturn();
   }
+  
+  @Test
+  public void shouldGetSubFolders() throws Exception {
+    User user = make(a(UserMaker.User));
+    UserFileUploadSetting fileUploadSetting = make(a(UserFileUploadSettingMaker.FileUploadSetting));
+    fileUploadSetting.setUser(user);
+    user.setFileUploadSetting(fileUploadSetting);
+    user.setPassword(SecurityUtils.hashPassword(user.getPassword()));
+    userRepository.save(user);
+    
+    Folder parentFolder1 = make(a(FolderMaker.Folder, with(FolderMaker.uniqueId, 
+      RandomStringUtils.randomAlphanumeric(20))));
+    Folder parentFolder2 = make(a(FolderMaker.Folder, with(FolderMaker.uniqueId, 
+      RandomStringUtils.randomAlphanumeric(20))));
+    parentFolder1.setUser(user);
+    parentFolder2.setUser(user);
+    folderRepository.save(parentFolder1);
+    folderRepository.save(parentFolder2);
+    
+    Folder subFolder = make(a(FolderMaker.Folder, with(FolderMaker.uniqueId, 
+      RandomStringUtils.randomAlphanumeric(20))));
+    subFolder.setUser(user);
+    subFolder.setParentFolder(parentFolder1);
+    folderRepository.save(subFolder);
+    
+    String API = "/v1/folders/" + parentFolder1.getUniqueId() + "/subfolders";
+
+    mockMvc.perform(get(API).contentType(MediaType.APPLICATION_JSON)
+      .requestAttr("principal", user))
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andExpect(jsonPath("$.status").value("success"))
+      .andExpect(jsonPath("$.body.results").isArray())
+      .andExpect(jsonPath("$.body.results[*]").value(Matchers.hasSize(1)))
+      .andExpect(jsonPath("$.body.results[*].uniqueId").value(containsInAnyOrder(subFolder.getUniqueId())))
+      .andReturn();
+  }
 
 }

@@ -1,4 +1,4 @@
-package filesaver.api.test.service;
+package filesaver.api.test.services;
 
 /**
  *
@@ -7,6 +7,6 @@ package filesaver.api.test.service;
  * @since 11 Jan 2017
  * 
  */
-public class UserServiceTest {
+public class LoginServiceTest {
   
 }

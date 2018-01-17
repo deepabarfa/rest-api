@@ -1,4 +1,4 @@
-package filesaver.api.test.service;
+package filesaver.api.test.services;
 
 import filesaver.api.dao.models.v1.User;
 import filesaver.api.exceptions.v1.AlreadyExistException;

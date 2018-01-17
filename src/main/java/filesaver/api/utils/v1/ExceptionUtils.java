@@ -26,31 +26,31 @@ public class ExceptionUtils {
     ExceptionUtils.messageUtils = messageUtils;
   }
 
-  public static void throwErrorIfRequestBodyIsNull(BaseResource resource) throws InvalidRequestException {
+  public static void throwInvalidRequestExceptionIfResourceIsNull(BaseResource resource) throws InvalidRequestException {
     if(resource == null) {
       throw new InvalidRequestException(messageUtils.t("error.request.invalid"));
     }
   }
 
-  public static void throwExceptionForInvalidEmailId() throws InvalidParameterException {
+  public static void throwInvalidParameterExceptionForInvalidEmailId() throws InvalidParameterException {
     throw new InvalidParameterException(messageUtils.t("error.user.invalidEmail"));
   }
   
-  public static void throwExceptionForInvalidUserName() throws InvalidParameterException {
+  public static void throwInvalidParameterExceptionForInvalidUserName() throws InvalidParameterException {
     throw new InvalidParameterException(messageUtils.t("error.user.invalidName"));
   }
 
-  public static void throwExceptionForInvalidFolderName() throws InvalidParameterException {
+  public static void throwInvalidParameterExceptionForInvalidFolderName() throws InvalidParameterException {
     throw new InvalidParameterException(messageUtils.t("error.folder.invalidName"));
   }
   
-  public static void throwExceptionForInvalidPassword() throws InvalidParameterException {
+  public static void throwInvalidParameterExceptionForInvalidPassword() throws InvalidParameterException {
     throw new InvalidParameterException(messageUtils.t("error.user.invalidPassword"));
   }
   
-  public static void throwExceptionIfPasswordIsBlank(String password) throws InvalidParameterException {
+  public static void throwInvalidParameterExceptionIfPasswordIsBlank(String password) throws InvalidParameterException {
     if(StringUtils.isBlank(password)) {
-      throwExceptionForInvalidPassword();
+      throwInvalidParameterExceptionForInvalidPassword();
     }
   }
   
