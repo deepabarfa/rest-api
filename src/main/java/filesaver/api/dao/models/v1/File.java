@@ -52,4 +52,8 @@ public class File extends BaseModel implements Serializable {
   @NotNull
   @Column(name = "file_type")
   private String type;
+  
+  @NotNull
+  @Column(name = "upload_status")
+  private String status;
 }

@@ -3,7 +3,6 @@ package filesaver.api.services.v1;
 import filesaver.api.dao.models.v1.User;
 import filesaver.api.exceptions.v1.UnAuthorizeException;
 import filesaver.api.repositories.v1.UserRepository;
-import filesaver.api.resources.v1.UserResource;
 import filesaver.api.utils.v1.ExceptionUtils;
 import filesaver.api.utils.v1.SecurityUtils;
 import java.security.InvalidKeyException;

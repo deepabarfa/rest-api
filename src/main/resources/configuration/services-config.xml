@@ -43,9 +43,5 @@
     <task:scheduler id="taskScheduler" pool-size="20" />
     
     <!--<cache:annotation-driven cache-manager="cacheManager" />-->
-    
-<!--    <security:global-method-security pre-post-annotations="enabled">
-        <security:expression-handler ref="expressionHandler"/>
-    </security:global-method-security>-->
-    
+ 
 </beans>

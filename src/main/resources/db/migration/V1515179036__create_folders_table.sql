@@ -7,7 +7,8 @@ create table folders (
     user_id bigint not null references users(id),
     folder_size numeric not null,
     created_at timestamp(6) default current_timestamp,
-    updated_at timestamp(6) default current_timestamp
+    updated_at timestamp(6) default current_timestamp,
+    constraint parent_folder_id_sub_folder_name_unique unique (name, parent_folder_id)
 
 );
 
