@@ -7,7 +7,7 @@ create table files (
     user_id bigint not null references users(id),
     file_size numeric not null,
     file_type varchar(50) not null,
-    upload_status varchar(20) not null check (upload_status in ('PROCESSING', 'COMPLETED', 'FAILED')),
+    upload_status varchar(20) not null check (upload_status in ('processing', 'completed', 'failed')),
     created_at timestamp(6) default current_timestamp,
     updated_at timestamp(6) default current_timestamp,
     constraint folder_id_file_name_unique unique (name, folder_id)

@@ -58,8 +58,8 @@ public class FolderService {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  public FolderResource createSubFolder(String parentUniqueId, FolderResource folderResource, User user) throws NotFoundException, InvalidRequestException, InvalidParameterException {
-    Folder parentFolder = getFolderByUniqueIdAndUser(parentUniqueId, user);
+  public FolderResource createSubFolder(String parentFolderUniqueId, FolderResource folderResource, User user) throws NotFoundException, InvalidRequestException, InvalidParameterException {
+    Folder parentFolder = getFolderByUniqueIdAndUser(parentFolderUniqueId, user);
     ValidationUtils.validateCreateFolderRequest(folderResource);
     Folder folder = folderResource.getModel();
     folder.setParentFolder(parentFolder);
@@ -68,8 +68,8 @@ public class FolderService {
     return new FolderResource(folder);
   }
 
-  public FolderResource getFolder(String uniqueId, User user) throws NotFoundException {
-    Folder folder = getFolderByUniqueIdAndUser(uniqueId, user);
+  public FolderResource getFolder(String folderUniqueId, User user) throws NotFoundException {
+    Folder folder = getFolderByUniqueIdAndUser(folderUniqueId, user);
     return new FolderResource(folder);
   }
   
@@ -85,9 +85,9 @@ public class FolderService {
     return filesaverPage;
   }
 
-  public FilesaverPage<FolderResource> getPaginatedSubFolders(String uniqueId, User user, int page, int count) throws NotFoundException {
+  public FilesaverPage<FolderResource> getPaginatedSubFolders(String parentFolderUniqueId, User user, int page, int count) throws NotFoundException {
     Pageable pageable = PageRequest.of(page - 1, count, new Sort(Sort.Direction.DESC, "updatedAt"));
-    Folder parentFolder = getFolderByUniqueIdAndUser(uniqueId, user);
+    Folder parentFolder = getFolderByUniqueIdAndUser(parentFolderUniqueId, user);
     Page<Folder> subFoldersPage = folderRepository.findByUserAndParentFolder(user, parentFolder, pageable);
     List<FolderResource> folderResources = subFoldersPage.getContent()
       .stream()

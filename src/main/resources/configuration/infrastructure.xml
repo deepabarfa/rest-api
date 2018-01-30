@@ -60,6 +60,7 @@
     
     <bean id="serverProps" class="filesaver.api.models.v1.ServerProps" >
         <constructor-arg index="0" value="${filesaver.api.env}" />
+        <constructor-arg index="1" value="${filesaver.api.env.maxUploadSize}" />
     </bean>
  
     <!--    

@@ -42,5 +42,9 @@ public class FileResource extends BaseResource<File> {
   public String getUpdatedAt() {
     return getModel().getUpdatedAt().toString("dd-MM-yyyy HH:mm:ss");
   }
+  
+  public String getData() {
+    return getModel().getData();
+  }
 
 }

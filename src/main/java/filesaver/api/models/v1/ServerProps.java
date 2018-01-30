@@ -15,9 +15,11 @@ import lombok.Setter;
 public class ServerProps {
   
   private String env;
+  private long maxUploadSize;
   
-  public ServerProps(String env) {
+  public ServerProps(String env, long maxUploadSize) {
     this.env = env;
+    this.maxUploadSize = maxUploadSize;
   }
   
   private enum Environment {

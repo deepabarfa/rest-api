@@ -47,18 +47,18 @@ public class FolderController {
     return new ResponseEntity<>(new ApiResponse(createdFolder, success), HttpStatus.CREATED);
   }
   
-  @RequestMapping(method = POST, value = "/{uniqueId}")
-  public ResponseEntity<ApiResponse> createSubFolder(@PathVariable(value = "uniqueId") String uniqueId, @RequestBody FolderResource folderResource, 
+  @RequestMapping(method = POST, value = "/{folderUniqueId}")
+  public ResponseEntity<ApiResponse> createSubFolder(@PathVariable(value = "folderUniqueId") String folderUniqueId, @RequestBody FolderResource folderResource, 
     HttpServletRequest request) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException, NotFoundException {
     User user = (User) request.getAttribute("principal");
-    FolderResource createdFolder = folderService.createSubFolder(uniqueId, folderResource, user);
+    FolderResource createdFolder = folderService.createSubFolder(folderUniqueId, folderResource, user);
     return new ResponseEntity<>(new ApiResponse(createdFolder, success), HttpStatus.CREATED);
   }
   
-  @RequestMapping(method = GET, value = "/{uniqueId}")
-  public ResponseEntity<ApiResponse> getFolder(@PathVariable(value = "uniqueId") String uniqueId, HttpServletRequest request) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException, NotFoundException {
+  @RequestMapping(method = GET, value = "/{folderUniqueId}")
+  public ResponseEntity<ApiResponse> getFolder(@PathVariable(value = "folderUniqueId") String folderUniqueId, HttpServletRequest request) throws InvalidRequestException, InvalidParameterException, UnAuthorizeException, NotFoundException {
     User user = (User) request.getAttribute("principal");
-    FolderResource createdFolder = folderService.getFolder(uniqueId, user);
+    FolderResource createdFolder = folderService.getFolder(folderUniqueId, user);
     return new ResponseEntity<>(new ApiResponse(createdFolder, success), HttpStatus.OK);
   }
   
@@ -71,12 +71,12 @@ public class FolderController {
     return new ResponseEntity<>(new ApiResponse(paginatedTopFolders, success), HttpStatus.OK);
   }
   
-  @RequestMapping(method = GET, value = "/{uniqueId}/subfolders")
-  public ResponseEntity<ApiResponse> getSubFolders(@PathVariable(value = "uniqueId") String uniqueId,
+  @RequestMapping(method = GET, value = "/{folderUniqueId}/subfolders")
+  public ResponseEntity<ApiResponse> getSubFolders(@PathVariable(value = "folderUniqueId") String folderUniqueId,
     @RequestParam(name = "page", defaultValue = "1", required = false) int page, 
     @RequestParam(name = "count", defaultValue = "5", required = false) int count, HttpServletRequest request) throws NotFoundException {
     User user = (User) request.getAttribute("principal");
-    FilesaverPage<FolderResource> paginatedSubFolders = folderService.getPaginatedSubFolders(uniqueId, user, page, count);
+    FilesaverPage<FolderResource> paginatedSubFolders = folderService.getPaginatedSubFolders(folderUniqueId, user, page, count);
     return new ResponseEntity<>(new ApiResponse(paginatedSubFolders, success), HttpStatus.OK);
   }
   
